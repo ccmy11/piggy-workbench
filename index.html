@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+<title>🐷 小猪工作台</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="小猪工作台">
+<meta name="theme-color" content="#d63a76">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon-180.png">
+<link rel="apple-touch-icon" href="icons/icon-180.png">
+<link rel="stylesheet" href="styles.css?v=6">
+</head>
+<body>
+<div class="phone">
+  <header class="topbar">
+    <button class="icon-btn" id="btnMenu" aria-label="菜单">☰</button>
+    <div class="top-title" id="topTitle">小猪工作台</div>
+    <button class="icon-btn" id="btnTheme" aria-label="切换主题">🌙</button>
+  </header>
+
+  <div class="body-row">
+    <main class="scroll" id="scroll">
+
+      <!-- ============ 首页 ============ -->
+      <section class="view" data-view="home" id="view-home" hidden>
+        <div class="hero card">
+          <div class="hero-pig">🐷</div>
+          <div class="hero-txt">
+            <div class="hero-hi" id="heroHi">你好呀～</div>
+            <div class="hero-date" id="heroDate"></div>
+          </div>
+        </div>
+
+        <div class="sec-head"><span class="sec-t">📋 今日计划</span><button class="mini-btn" data-act="add-plan">＋ 添加</button></div>
+        <div class="card pad" id="homePlans"></div>
+
+        <div class="sec-head"><span class="sec-t">✅ 今日打卡</span></div>
+        <div class="card pad rings-row" id="homeRings"></div>
+
+        <div class="sec-head"><span class="sec-t">📊 全部数据</span></div>
+        <div class="stat-grid" id="homeStats"></div>
+      </section>
+
+      <!-- ============ 英语 ============ -->
+      <section class="view" data-view="english" id="view-english" hidden>
+        <div class="card pad" id="enSummary"></div>
+        <div class="card pad suggest-card">
+          <div class="sec-t">🎁 今日雅思推荐</div>
+          <div id="enSuggest" class="suggest-list"></div>
+          <button class="btn primary full" id="enTakeBtn" data-act="take-suggest">全部收下，加入生词本</button>
+        </div>
+        <div class="sec-head"><span class="sec-t">📖 我的生词本</span>
+          <span class="seg" id="enFilter">
+            <button class="seg-btn on" data-enf="all">全部</button>
+            <button class="seg-btn" data-enf="learning">学习中</button>
+            <button class="seg-btn" data-enf="mastered">已掌握</button>
+          </span>
+        </div>
+        <div id="enList"></div>
+      </section>
+
+      <!-- ============ 考试 ============ -->
+      <section class="view" data-view="exam" id="view-exam" hidden>
+        <div class="card pad" id="examSummary"></div>
+        <div class="sec-head"><span class="sec-t">🎓 考试日程</span><button class="mini-btn" data-act="add-exam">＋ 添加考试</button></div>
+        <div id="examList"></div>
+      </section>
+
+      <!-- ============ 锻炼 ============ -->
+      <section class="view" data-view="workout" id="view-workout" hidden>
+        <div class="card pad" id="woSummary"></div>
+        <div class="sec-head"><span class="sec-t">🏃 近 7 天运动时长</span></div>
+        <div class="card pad" id="woChart"></div>
+        <div class="sec-head"><span class="sec-t">⚖️ 体重趋势</span></div>
+        <div class="card pad" id="woWeight"></div>
+        <div class="sec-head"><span class="sec-t">📝 运动记录</span><button class="mini-btn" data-act="add-workout">＋ 记一笔</button></div>
+        <div id="woList"></div>
+        <div class="sec-head"><span class="sec-t">体重记录</span><button class="mini-btn" data-act="add-weight">＋ 称一称</button></div>
+        <div id="wtList"></div>
+      </section>
+
+      <!-- ============ 新闻 ============ -->
+      <section class="view" data-view="news" id="view-news" hidden>
+        <div class="notice card pad">📢 本模块内容为<b>内置示例与手动收藏</b>，非实时推送；看到好的财经资讯可以手动收藏进来。</div>
+        <div class="sec-head"><span class="sec-t">🔥 财经热榜（示例）</span><button class="mini-btn" data-act="swap-news">换一批</button></div>
+        <div class="seg wrap-seg" id="newsFilter">
+          <button class="seg-btn on" data-nf="全部">全部</button>
+          <button class="seg-btn" data-nf="股票">股票</button>
+          <button class="seg-btn" data-nf="宏观">宏观</button>
+          <button class="seg-btn" data-nf="理财">理财</button>
+          <button class="seg-btn" data-nf="国际">国际</button>
+        </div>
+        <div id="newsList"></div>
+        <div class="sec-head"><span class="sec-t">⭐ 我的收藏</span><button class="mini-btn" data-act="add-news">＋ 收藏</button></div>
+        <div id="myNewsList"></div>
+      </section>
+
+      <!-- ============ 攒钱 ============ -->
+      <section class="view" data-view="money" id="view-money" hidden>
+        <div class="card pad money-hero" id="moneySummary"></div>
+        <div class="sec-head"><span class="sec-t">💰 资产分布</span></div>
+        <div class="card pad" id="moneyChart"></div>
+        <div class="sec-head"><span class="sec-t">🏦 我的资产</span><button class="mini-btn" data-act="add-asset">＋ 添加资产</button></div>
+        <div id="assetList"></div>
+        <div class="sec-head"><span class="sec-t">💼 收入记录</span><button class="mini-btn" data-act="add-income">＋ 记收入</button></div>
+        <div id="incomeList"></div>
+      </section>
+
+      <!-- ============ 记账 ============ -->
+      <section class="view" data-view="expense" id="view-expense" hidden>
+        <div class="card pad" id="exSummary"></div>
+        <div class="sec-head"><span class="sec-t">🗓️ 月份</span>
+          <input type="month" class="month-pick" id="exMonth" aria-label="选择月份">
+        </div>
+        <div class="sec-head"><span class="sec-t">🥧 分类占比</span></div>
+        <div class="card pad" id="exChart"></div>
+        <div class="sec-head"><span class="sec-t">🧾 流水</span><button class="mini-btn" data-act="add-expense">＋ 记一笔</button></div>
+        <div id="exList"></div>
+      </section>
+
+    </main>
+
+    <button class="fab" id="fab" data-act="fab" aria-label="快速记录">＋</button>
+
+    <!-- 抽屉 -->
+    <div class="scrim" id="scrim"></div>
+    <aside class="drawer" id="drawer">
+      <div class="drawer-head">
+        <span class="drawer-logo">🐷</span>
+        <span class="drawer-name">小猪工作台</span>
+        <button class="icon-btn" id="btnCloseDrawer" aria-label="关闭">✕</button>
+      </div>
+      <nav class="drawer-nav" id="tabbar">
+        <button class="tab" data-go="home"><span class="ti">🏠</span><span class="tl">首页</span></button>
+        <button class="tab" data-go="english"><span class="ti">📚</span><span class="tl">英语</span></button>
+        <button class="tab" data-go="exam"><span class="ti">🎓</span><span class="tl">考试</span></button>
+        <button class="tab" data-go="workout"><span class="ti">💪</span><span class="tl">锻炼</span></button>
+        <button class="tab" data-go="news"><span class="ti">📰</span><span class="tl">新闻</span></button>
+        <button class="tab" data-go="money"><span class="ti">💰</span><span class="tl">攒钱</span></button>
+        <button class="tab" data-go="expense"><span class="ti">🧾</span><span class="tl">记账</span></button>
+      </nav>
+      <div class="drawer-foot">
+        <button class="btn ghost full" data-act="open-settings">⚙️ 设置与备份</button>
+      </div>
+    </aside>
+
+    <div id="modalRoot"></div>
+    <div id="toast"></div>
+  </div>
+</div>
+<script src="js/store.js?v=6"></script>
+<script src="js/charts.js?v=6"></script>
+<script src="js/app.js?v=6"></script>
+</body>
+</html>
